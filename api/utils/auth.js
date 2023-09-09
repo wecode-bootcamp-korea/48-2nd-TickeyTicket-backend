@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { userService } = require('../services');
+const userService = require('../services/userServices');
 
 const loginRequired = async (req, res, next) => {
   try {
@@ -23,7 +23,6 @@ const loginRequired = async (req, res, next) => {
       return res.status(error.statusCode).json({ message: error.message });
     }
 
-    // 4) GRANT ACCESS
     req.user = user;
     next();
   } catch {
@@ -34,3 +33,6 @@ const loginRequired = async (req, res, next) => {
   }
 };
 module.exports = { loginRequired };
+
+
+userId = req.user
