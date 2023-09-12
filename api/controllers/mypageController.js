@@ -1,6 +1,13 @@
 const mypageService = require('../services/mypageService');
 const { catchAsync } = require('../utils/error');
 
+const getAllBookingList = catchAsync(async (req, res) => {
+  const userId = req.user.id;
+  const bookingList = await mypageService.getAllBookingList(userId);
+
+  res.status(200).json({ data: bookingList });
+});
+
 const deleteBookingTicket = catchAsync(async (req, res) => {
   const userId = req.user.id;
   const { paymentCode, productOptionId } = req.body;
@@ -15,5 +22,6 @@ const deleteBookingTicket = catchAsync(async (req, res) => {
 });
 
 module.exports = {
+  getAllBookingList,
   deleteBookingTicket,
 };

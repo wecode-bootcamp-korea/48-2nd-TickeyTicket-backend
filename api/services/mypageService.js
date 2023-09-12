@@ -1,5 +1,9 @@
 const mypageDao = require('../models/mypageDao');
 
+const getAllBookingList = async (userId) => {
+  return await mypageDao.getAllBookingList(userId);
+};
+
 const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
   const ticket = await mypageDao.checkTicket(
     userId,
@@ -30,5 +34,6 @@ const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
 };
 
 module.exports = {
+  getAllBookingList,
   deleteBookingTicket,
 };

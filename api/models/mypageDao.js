@@ -1,5 +1,39 @@
 const appDataSource = require('./dataSource');
 
+const getAllBookingList = async (userId) => {
+  try {
+    const data = await appDataSource.query(
+      `
+        SELECT
+          p.id,
+          p.name,
+          po.start_date,
+          po.start_time,
+          po.running_time,
+          pi.payment_code,
+          pi.qrcode_url,
+          pi.payment_total_quantity,
+          pi.payment_total_price
+        FROM products AS p 
+          LEFT JOIN product_options AS po 
+            ON po.product_id = p.id
+          LEFT JOIN payment_information AS pi
+            ON pi.product_option_id = po.id
+        WHERE p.user_id = ?
+        AND pi.deleted_at IS NULL
+        ORDER BY pi.id DESC
+      `,
+      [userId]
+    );
+    return data;
+  } catch {
+    const error = new Error('dataSource Error #getAllBookingList');
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
 const checkTicket = async (userId, paymentCode, productOptionId) => {
   try {
     const [checkdate] = await appDataSource.query(
@@ -73,6 +107,7 @@ const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
 };
 
 module.exports = {
+  getAllBookingList,
   checkTicket,
   checkTicketList,
   deleteBookingTicket,
