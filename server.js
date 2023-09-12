@@ -1,5 +1,5 @@
-const { createApp } = require('./app');
-const dataSource = require('./api/models/dataSource');
+const { createApp } = require("./app");
+const dataSource = require("./api/models/dataSource");
 
 const startServer = async () => {
   const app = createApp();
@@ -7,10 +7,10 @@ const startServer = async () => {
   await dataSource
     .initialize()
     .then(() => {
-      console.log('Data Source has been initialized!');
+      console.log("Data Source has been initialized!");
     })
     .catch((error) => {
-      console.error('Error during Data Source initialization', error);
+      console.error("Error during Data Source initialization", error);
     });
 
   const PORT = process.env.PORT || 3000;
