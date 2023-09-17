@@ -21,7 +21,7 @@ const validateSignUp = async (
   
       throw error;  
     }
-};
+  };
 
 module.exports = {
     validateSignUp,
