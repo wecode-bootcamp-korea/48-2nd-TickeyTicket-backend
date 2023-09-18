@@ -1,4 +1,4 @@
-const kakaoService = require('../services/kakaoServices');
+const kakaoService = require('../services/kakaoService');
 const { catchAsync } = require('../utils/error');
 
 const kakaoLogin = catchAsync(async (req, res) => {

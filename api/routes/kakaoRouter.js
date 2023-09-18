@@ -1,7 +1,7 @@
 const express = require('express');
-const kakaoControllers = require('../controllers/kakaoControllers');
+const kakaoController = require('../controllers/kakaoController');
 const kakaoRouter = express.Router();
 
-kakaoRouter.post('/kakaologin', kakaoControllers.kakaoLogin);
+kakaoRouter.post('/kakaologin', kakaoController.kakaoLogin);
 
 module.exports = { kakaoRouter };
