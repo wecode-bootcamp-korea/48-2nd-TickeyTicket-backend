@@ -9,6 +9,7 @@ const { wishlistRouter } = require('./wishlistRouter');
 const { mypageRouter } = require('./mypageRouter');
 const { mainRouter } = require('./mainRouter');
 const { registerRouter } = require('./registerRouter');
+const { paymentRouter } = require('./paymentRoute');
 
 routes.use('/kakao-router', kakaoRouter);
 routes.use('/user-router', userRouter);
@@ -18,5 +19,6 @@ routes.use('/wishlist', wishlistRouter);
 routes.use('/mypage', mypageRouter);
 routes.use('/main', mainRouter);
 routes.use('/registerproduct', registerRouter);
+routes.use("/payment", paymentRouter);
 
 module.exports = routes;
