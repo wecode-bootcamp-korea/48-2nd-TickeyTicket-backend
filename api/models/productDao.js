@@ -6,7 +6,7 @@ const getProductDetailById = async (productId) => {
       p.id, p.name, p.description AS productDescription,
       p.price, p.available_ticket AS availableTicket,
       p.film_rating AS filmRating, p.place AS performPlace,
-      p.important_notice, p.discount_information,
+      p.important_notice AS importantNotice, p.discount_information AS discountInformation,
       ti.thumbnail_image_url AS thumbnailImageUrl,
       cg.genre_name AS genreName,
       po.id AS productOptionsId,
