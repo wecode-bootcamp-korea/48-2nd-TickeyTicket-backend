@@ -10,7 +10,7 @@ const getProductDetailById = async (productId) => {
       ti.thumbnail_image_url AS thumbnailImageUrl,
       cg.genre_name AS genreName,
       po.id AS productOptionsId,
-      po.sequence, po.start_date AS startDate, po.start_time AS startTime,
+      po.sequence, DATE_FORMAT(po.start_date, '%Y-%m-%d') AS startDate, po.start_time AS startTime,
       po.running_time AS runningTime,
       AVG(r.rating) AS averageRating,
       (
@@ -58,7 +58,7 @@ const getProductDetailById = async (productId) => {
   const reviewQuery = `
     SELECT 
       r.user_id AS userId,
-      DATE_FORMAT(r.created_at, '%y/%m/%d') AS writtenDate,
+      DATE_FORMAT(r.created_at, '%Y-%m-%d') AS writtenDate,
       r.title,
       u.nickname,
       r.content AS content,

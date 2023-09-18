@@ -11,7 +11,7 @@ const getAllMyReviewById = async (userId) => {
        r.title,
        r.rating,
        r.content,
-       DATE_FORMAT(r.created_at, '%y/%m/%d') AS writtenDate
+       DATE_FORMAT(r.created_at, '%Y-%m-%d') AS writtenDate
      FROM 
        reviews r
      INNER JOIN 
