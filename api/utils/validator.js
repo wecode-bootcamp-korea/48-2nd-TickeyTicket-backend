@@ -9,14 +9,14 @@ const validateSignUp = async (
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   
     if (!emailRegex.test(email)) {
-      const error = new Error("INVALID_USER : email");
+      const error = new Error("EMAIL_VALIDATION_ERROR");
       error.statusCode = 400;
   
       throw error;
     }
   
     if (!passwordRegex.test(password)) {
-      const error = new Error("INVALID_USER : password");
+      const error = new Error("PASSWORD_VALIDATION_ERROR");
       error.statusCode = 400;
   
       throw error;  

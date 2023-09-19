@@ -1,13 +1,13 @@
 require('dotenv').config();
 
-const express = require('express');
 const cors = require('cors');
+const express = require('express');
 const morgan = require('morgan');
 const appDataSource = require('./api/models/dataSource');
 const { globalErrorHandler } = require('./api/utils/error');
 const route = require('./api/routes');
+const PORT = process.env.PORT || 8000;
 
-const PORT = 3000;
 const app = express();
 
 app.use(express.json());

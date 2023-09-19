@@ -1,7 +1,7 @@
 const appDataSource = require("./dataSource");
 
 const createUser = async (
-  name,
+  userName,
   nickName,
   email,
   password,
@@ -18,7 +18,7 @@ const createUser = async (
                 ?, ?, ?, ?)
             `,
       [
-        name,
+        userName,
         nickName,
         email,
         password,
