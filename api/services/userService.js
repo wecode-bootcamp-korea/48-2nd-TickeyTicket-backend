@@ -11,7 +11,7 @@ const hashPassword = async (plaintextPassword) => {
 };
 
 const signUp = async(
-  name,
+  userName,
   nickName,
   email,
   password,
@@ -20,7 +20,7 @@ const signUp = async(
 
   const hashedPassword = await hashPassword(password);
   const createUser = await userDao.createUser(
-    name,
+    userName,
     nickName,
     email,
     hashedPassword,
