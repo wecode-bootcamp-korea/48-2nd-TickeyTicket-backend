@@ -3,15 +3,14 @@ const appDataSource = require('./dataSource');
 const getProductDetailById = async (productId) => {
   const query = `
     SELECT
-      p.id, p.name, p.description AS productDescription,
-      p.price, p.available_ticket AS availableTicket,
+      p.id, p.name, p.description AS productDescription,p.price,
       p.film_rating AS filmRating, p.place AS performPlace,
       p.important_notice AS importantNotice, p.discount_information AS discountInformation,
       ti.thumbnail_image_url AS thumbnailImageUrl,
       cg.genre_name AS genreName,
       po.id AS productOptionsId,
       po.sequence, DATE_FORMAT(po.start_date, '%Y-%m-%d') AS startDate, po.start_time AS startTime,
-      po.running_time AS runningTime,
+      po.running_time AS runningTime, po.available_ticket AS availableTicket,
       AVG(r.rating) AS averageRating,
       (
         SELECT 
@@ -48,7 +47,7 @@ const getProductDetailById = async (productId) => {
       reviews r ON po.id = r.product_option_id
     WHERE p.id = ?
     GROUP BY
-      p.id, p.name, p.description, p.price, p.available_ticket,
+      p.id, p.name, p.description, p.price, po.available_ticket,
       p.film_rating, p.place, ti.thumbnail_image_url,
       cg.genre_name, po.id, po.sequence, po.start_date,
       po.start_time, po.running_time
