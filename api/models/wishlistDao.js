@@ -1,9 +1,9 @@
 const appDataSource = require('./dataSource');
 
-const addWishList = async( userId, productId ) => {
-    try{
-        const addWishProduct = await appDataSource.query(
-            `
+const addWishList = async (userId, productId) => {
+  try {
+    const addWishProduct = await appDataSource.query(
+      `
             INSERT INTO wishlists (
                 user_id, 
                 product_id
@@ -12,32 +12,32 @@ const addWishList = async( userId, productId ) => {
                 ?
             )
             `,
-            [userId, productId]
-        );
-        return addWishProduct
-    } catch {
-        const error = new Error('dataSource Error');
-        error.statusCode = 400;
-    
-        throw error;
-    };
+      [userId, productId]
+    );
+    return addWishProduct;
+  } catch {
+    const error = new Error('dataSource Error');
+    error.statusCode = 400;
+
+    throw error;
+  }
 };
 
-const deleteWishList = async( userId, productId  ) => {
-    const deleteRows = (await appDataSource.query(
-        `
+const deleteWishList = async (userId, productId) => {
+  const deleteRows = await appDataSource.query(
+    `
         DELETE FROM wishlists 
         WHERE 
             user_id = ? AND
             product_id = ? 
         `,
-        [ userId, productId  ]
-    ))
+    [userId, productId]
+  );
 
-	return deleteRows
+  return deleteRows;
 };
 
 module.exports = {
-    addWishList,
-    deleteWishList
-}
+  addWishList,
+  deleteWishList,
+};

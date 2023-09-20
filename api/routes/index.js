@@ -19,6 +19,6 @@ routes.use('/wishlist', wishlistRouter);
 routes.use('/mypage', mypageRouter);
 routes.use('/main', mainRouter);
 routes.use('/registerproduct', registerRouter);
-routes.use("/payment", paymentRouter);
+routes.use('/payment', paymentRouter);
 
 module.exports = routes;

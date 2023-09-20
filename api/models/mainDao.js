@@ -1,10 +1,17 @@
 const appDataSource = require('./dataSource');
 
-const getProductByCategory = async ( userId, lng, lat, genreId, hashtagId, dateRangeQuery, orderingQuery) => {
-    try {
-        console.log(lng, lat)
-        const locationByProduct =  await appDataSource.query(
-        `
+const getProductByCategory = async (
+  userId,
+  lng,
+  lat,
+  genreId,
+  hashtagId,
+  dateRangeQuery,
+  orderingQuery
+) => {
+  try {
+    const locationByProduct = await appDataSource.query(
+      `
         SELECT 
             p.id AS productId,
             CASE WHEN ${userId} IS NOT NULL AND w.user_id = ${userId} 
@@ -69,22 +76,21 @@ const getProductByCategory = async ( userId, lng, lat, genreId, hashtagId, dateR
             HAVING distance < 2 
             ${orderingQuery};
             `,
-            [genreId, hashtagId]
-        );
+      [genreId, hashtagId]
+    );
     return locationByProduct;
+  } catch {
+    const error = new Error('dataSource Error');
+    error.statusCode = 400;
 
-    } catch {
-        const error = new Error('dataSource Error');
-        error.statusCode = 400;
+    throw error;
+  }
+};
 
-        throw error;
-    };
-}; 
-
-const getAllProdctList = async() => {
-    try {
-        const showAllProdcut = await appDataSource.query(
-            `
+const getAllProdctList = async () => {
+  try {
+    const showAllProdcut = await appDataSource.query(
+      `
             SELECT 
                 p.id AS productId,
                 p.name,
@@ -135,17 +141,17 @@ const getAllProdctList = async() => {
                 wishlists w ON p.id = w.product_id 
             GROUP BY p.id, w.id, ti.id, mc.id;
             `
-        )
-        return showAllProdcut;
-    } catch {
-        const error = new Error('dataSource Error');
-        error.statusCode = 400;
+    );
+    return showAllProdcut;
+  } catch {
+    const error = new Error('dataSource Error');
+    error.statusCode = 400;
 
-        throw error;
-    };
-}
+    throw error;
+  }
+};
 
 module.exports = {
-    getProductByCategory,
-    getAllProdctList
+  getProductByCategory,
+  getAllProdctList,
 };

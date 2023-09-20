@@ -9,7 +9,7 @@ const getProductDetailById = async (productId) => {
       ti.thumbnail_image_url AS thumbnailImageUrl,
       cg.genre_name AS genreName,
       po.id AS productOptionsId,
-      po.sequence, DATE_FORMAT(po.start_date, '%Y-%m-%d') AS startDate, po.start_time AS startTime,
+      po.sequence, DATE_FORMAT(po.start_date, '%Y-%m-%d') AS startDate, DATE_FORMAT(MAX(po.start_date), '%Y-%m-%d') AS endDate, po.start_time AS startTime,
       po.running_time AS runningTime, po.available_ticket AS availableTicket,
       AVG(r.rating) AS averageRating,
       (
@@ -47,10 +47,9 @@ const getProductDetailById = async (productId) => {
       reviews r ON po.id = r.product_option_id
     WHERE p.id = ?
     GROUP BY
-      p.id, p.name, p.description, p.price, po.available_ticket,
-      p.film_rating, p.place, ti.thumbnail_image_url,
-      cg.genre_name, po.id, po.sequence, po.start_date,
-      po.start_time, po.running_time
+      p.id, po.available_ticket,
+      ti.thumbnail_image_url,
+      cg.id, po.id
   `;
   const allDetails = await appDataSource.query(query, [productId]);
 

@@ -1,22 +1,34 @@
 const mypageDao = require('../models/mypageDao');
 
-const deleteBookingTicket = async( userId, paymentCode, productOptionId ) => {
-    const ticket = await mypageDao.checkTicket( userId, paymentCode, productOptionId );
-    const selectticket = await mypageDao.checkTicketList( userId, paymentCode, productOptionId );
-    const checkticket = ticket.checkticketdate
-    const checkticketlist = selectticket.id
-    if (!checkticketlist || checkticket == 0){
-        const error = new Error('This Ticket do not cancel');
-        error.statusCode = 401
+const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
+  const ticket = await mypageDao.checkTicket(
+    userId,
+    paymentCode,
+    productOptionId
+  );
+  const selectticket = await mypageDao.checkTicketList(
+    userId,
+    paymentCode,
+    productOptionId
+  );
+  const checkticket = ticket.checkticketdate;
+  const checkticketlist = selectticket.id;
+  if (!checkticketlist || checkticket == 0) {
+    const error = new Error('This Ticket do not cancel');
+    error.statusCode = 401;
 
-        throw error
-    };
+    throw error;
+  }
 
-    if (checkticket == 1){
-        return await mypageDao.deleteBookingTicket( userId, paymentCode, productOptionId );
-    };
+  if (checkticket == 1) {
+    return await mypageDao.deleteBookingTicket(
+      userId,
+      paymentCode,
+      productOptionId
+    );
+  }
 };
 
 module.exports = {
-    deleteBookingTicket
-}
+  deleteBookingTicket,
+};
