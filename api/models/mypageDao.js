@@ -1,9 +1,9 @@
 const appDataSource = require('./dataSource');
 
-const checkTicket = async( userId, paymentCode, productOptionId ) => {
-    try { 
-        const [checkdate] = await appDataSource.query(
-        `
+const checkTicket = async (userId, paymentCode, productOptionId) => {
+  try {
+    const [checkdate] = await appDataSource.query(
+      `
         SELECT 
             CASE 
                 WHEN po.start_date >= CURDATE() AND 
@@ -22,21 +22,21 @@ const checkTicket = async( userId, paymentCode, productOptionId ) => {
             pi.payment_code = ? AND
             pi.product_option_id = ? 
         `,
-        [userId, paymentCode, productOptionId]
+      [userId, paymentCode, productOptionId]
     );
     return checkdate;
-} catch {
+  } catch {
     const error = new Error('dataSource Error');
     error.statusCode = 400;
 
     throw error;
-}
+  }
 };
 
-const checkTicketList = async( userId, paymentCode, productOptionId ) => {
-    try{
-        const [checklist] = await appDataSource.query(
-            `
+const checkTicketList = async (userId, paymentCode, productOptionId) => {
+  try {
+    const [checklist] = await appDataSource.query(
+      `
             SELECT 
                 id
             FROM payment_information
@@ -44,22 +44,21 @@ const checkTicketList = async( userId, paymentCode, productOptionId ) => {
                 user_id = ? AND 
                 payment_code = ? AND
                 product_option_id = ? 
-            `
-            ,
-            [ userId, paymentCode, productOptionId ]
-        );
-        return checklist
-    } catch {
-        const error = new Error('dataSource Error');
-        error.statusCode = 400;
-    
-        throw error;
-    };
+            `,
+      [userId, paymentCode, productOptionId]
+    );
+    return checklist;
+  } catch {
+    const error = new Error('dataSource Error');
+    error.statusCode = 400;
+
+    throw error;
+  }
 };
 
-const deleteBookingTicket = async( userId, paymentCode, productOptionId) => {
-    const deleteRows = (await appDataSource.query(
-        `
+const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
+  const deleteRows = await appDataSource.query(
+    `
         UPDATE payment_information pi
         SET pi.deleted_at = CURRENT_TIMESTAMP()
         WHERE 
@@ -67,14 +66,14 @@ const deleteBookingTicket = async( userId, paymentCode, productOptionId) => {
             pi.payment_code = ? AND
             pi.product_option_id = ? 
         `,
-        [ userId, paymentCode, productOptionId ]
-    ))
+    [userId, paymentCode, productOptionId]
+  );
 
-	return deleteRows
+  return deleteRows;
 };
 
 module.exports = {
-    checkTicket,
-    checkTicketList,
-    deleteBookingTicket
-}
+  checkTicket,
+  checkTicketList,
+  deleteBookingTicket,
+};

@@ -17,9 +17,8 @@ const getUserByKakaoEmail = async (email) => {
     );
 
     return result;
-
-} catch(err) {
-    const error = new Error("dataSource Error");
+  } catch (err) {
+    const error = new Error('dataSource Error');
     error.statusCode = 400;
 
     throw error;
@@ -42,9 +41,8 @@ const getUserByEmail = async (email) => {
     );
 
     return result;
-
-} catch(err) {
-    const error = new Error("dataSource Error");
+  } catch (err) {
+    const error = new Error('dataSource Error');
     error.statusCode = 400;
 
     throw error;
@@ -52,15 +50,15 @@ const getUserByEmail = async (email) => {
 };
 
 const createUser = async (
-    kakaoId,
-    nickName,
-    email,
-    birthDate,
-    gender,
-    profileImage
-    ) => {
+  kakaoId,
+  nickName,
+  email,
+  birthDate,
+  gender,
+  profileImage
+) => {
   try {
-  await appDataSource.query(
+    await appDataSource.query(
       `INSERT INTO users(
         kakao_id,
         nickname,
@@ -69,11 +67,10 @@ const createUser = async (
         gender,
         profile_image
       ) VALUES (?,?,?,?,?,?)`,
-      [ kakaoId, nickName, email, birthDate, gender, profileImage]
+      [kakaoId, nickName, email, birthDate, gender, profileImage]
     );
-
-} catch {
-    const error = new Error("dataSource Error");
+  } catch {
+    const error = new Error('dataSource Error');
     error.statusCode = 400;
 
     throw error;

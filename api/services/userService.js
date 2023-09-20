@@ -1,8 +1,8 @@
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-const  userDao  = require("../models/userDao");
-const { validateSignUp } = require("../utils/validator");
+const userDao = require('../models/userDao');
+const { validateSignUp } = require('../utils/validator');
 
 const hashPassword = async (plaintextPassword) => {
   const saltRounds = 10;
@@ -10,12 +10,7 @@ const hashPassword = async (plaintextPassword) => {
   return await bcrypt.hash(plaintextPassword, saltRounds);
 };
 
-const signUp = async(
-  userName,
-  nickName,
-  email,
-  password,
-) => {
+const signUp = async (userName, nickName, email, password) => {
   validateSignUp(email, password);
 
   const hashedPassword = await hashPassword(password);
@@ -23,14 +18,14 @@ const signUp = async(
     userName,
     nickName,
     email,
-    hashedPassword,
+    hashedPassword
   );
   return createUser;
 };
 
 const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
-
+  console.log(user);
   if (!user) {
     const error = new Error('INVALID_USER');
     error.statusCode = 401;
@@ -47,9 +42,8 @@ const signIn = async (email, password) => {
     throw error;
   }
 
-  const accessToken = jwt.sign({ id : user.id }, 
-    process.env.JWT_SECRET, {
-    algorithm : process.env.ALGORITHM,
+  const accessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    algorithm: process.env.ALGORITHM,
   });
 
   return accessToken;
@@ -62,5 +56,5 @@ const getUserById = async (id) => {
 module.exports = {
   signUp,
   signIn,
-  getUserById
-}
+  getUserById,
+};
