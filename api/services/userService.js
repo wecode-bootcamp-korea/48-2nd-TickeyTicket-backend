@@ -25,7 +25,6 @@ const signUp = async (userName, nickName, email, password) => {
 
 const signIn = async (email, password) => {
   const user = await userDao.getUserByEmail(email);
-  console.log(user);
   if (!user) {
     const error = new Error('INVALID_USER');
     error.statusCode = 401;
