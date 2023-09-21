@@ -106,9 +106,89 @@ const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
   return deleteRows;
 };
 
+const getMyProfile = async (userId) => {
+  try {
+    const data = await appDataSource.query(
+      `
+        SELECT 
+          id,
+          user_name,
+          nickname,
+          email,
+          password,
+          phone_number,
+          birthdate,
+          gender,
+          profile_image,
+          point
+        FROM users
+        WHERE id = ?
+        `,
+      [userId]
+    );
+    return data;
+  } catch {
+    const error = new Error('dataSource Error #getMyProfile');
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
+const updateMyProfile = async (
+  userId,
+  userName,
+  password,
+  phoneNumber,
+  birthdate,
+  gender
+) => {
+  try {
+    const result = await appDataSource.query(
+      `
+      UPDATE users 
+      SET
+        user_name = ?,
+        password = ?,
+        phone_number = IFNULL(?, phone_number),
+        birthdate = IFNULL(?, birthdate),
+        gender = IFNULL(?, gender)
+      WHERE id = ?;
+      `,
+      [userName, password, phoneNumber, birthdate, gender, userId]
+    );
+    return result;
+  } catch {
+    const error = new Error('dataSource Error #updateMyProfile');
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
+const deleteMyProfile = async (userId) => {
+  try {
+    const result = await appDataSource.query(
+      `
+      DELETE FROM users WHERE id = ?;
+      `,
+      [userId]
+    );
+    return result;
+  } catch {
+    const error = new Error('dataSource Error #deleteMyProfile');
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
 module.exports = {
   getAllBookingList,
   checkTicket,
   checkTicketList,
   deleteBookingTicket,
+  getMyProfile,
+  updateMyProfile,
+  deleteMyProfile,
 };
