@@ -19,6 +19,19 @@ const validateSignUp = async (email, password) => {
   }
 };
 
+const validatePassword = async (password) => {
+  const passwordRegex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+
+  if (!passwordRegex.test(password)) {
+    const error = new Error('PASSWORD_VALIDATION_ERROR');
+    error.statusCode = 400;
+
+    throw error;
+  }
+};
+
 module.exports = {
   validateSignUp,
+  validatePassword,
 };
