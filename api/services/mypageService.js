@@ -18,7 +18,7 @@ const deleteBookingTicket = async (userId, paymentCode, productOptionId) => {
     paymentCode,
     productOptionId
   );
-  const checkticket = ticket.checkdate;
+  const checkticket = ticket.checkticketdate;
   const checkticketlist = selectticket.id;
   if (!checkticketlist || checkticket == 0) {
     const error = new Error('This Ticket do not cancel');
